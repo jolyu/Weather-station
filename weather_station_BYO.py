@@ -93,10 +93,8 @@ while True:
           "Temperature": round(temp,3), 
           "Rainfall": round(rainfall,1)
     }
+    
     PushDB(ref, data)
-    
-    
+   
     store_speeds = []
     store_directions = []
-
-
