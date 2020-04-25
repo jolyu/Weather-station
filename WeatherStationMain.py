@@ -8,6 +8,7 @@ import statistics
 store_speeds = []
 store_directions = []
 
+#Reference to the database
 ref = GetDbRef("key.json", "https://jolyu-ntnu.firebaseio.com/")
 
 wind_count = 0
@@ -17,7 +18,7 @@ wind_interval = 5
 comp_val=1.18
 BUCKET_SIZE = 0.2794
 
-
+#Function called for each rotation by the anemometer
 def spin():
     global wind_count
     wind_count = wind_count + 1
@@ -72,18 +73,10 @@ while True:
     rainfall = rain_count * BUCKET_SIZE
     reset_rainfall()
     
-    #bme280
+    #Reads data from bme280
     humidity, pressure, temp = bme280_sensor.getAllTemp()
-
-    print("Wind speed: ", round(wind_speed,1), "\n",
-          "Wind gust: ", round(wind_gust,1), "\n",
-          "Wind direction: ", wind_dir, "\n",
-          "Humidity: ", round(humidity,1), "\n",
-          "Pressure: ", round(pressure,1), "\n",
-          "Temperature ", round(temp,1), "\n",
-          "Rainfall ", round(rainfall,1), "\n",
-          )
     
+    #Dictionary to store date to be sent to the database
     data = {"birds": 1,
             "Wind speed": round(wind_speed,3),
           "Wind gust": round(wind_gust,3), 
@@ -94,6 +87,7 @@ while True:
           "Rainfall": round(rainfall,1)
     }
     
+    #Pushes data to the database
     PushDB(ref, data)
    
     store_speeds = []
