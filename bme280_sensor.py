@@ -8,6 +8,7 @@ bus = smbus2.SMBus(port)
 
 bme280.load_calibration_params(bus,address)
 
+#Function to read from sensor
 def getAllTemp():
     bme280_data = bme280.sample(bus,address)
     return bme280_data.humidity, bme280_data.pressure, bme280_data.temperature
